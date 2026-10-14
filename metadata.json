@@ -1,0 +1,6 @@
+{
+  "name": "MG GAMES HUB",
+  "description": "The official Android APK gaming portal by MGCowbell and MGTECH. Browse, discover, and download high-octane Android games with zero login required.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

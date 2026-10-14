@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "Game": {
+      "title": "Game",
+      "description": "Represents an Android APK game published by MGCowbell / MGTECH",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the game" },
+        "title": { "type": "string", "description": "Title of the Android game", "maxLength": 100 },
+        "slug": { "type": "string", "description": "URL slug for the game", "pattern": "^[a-z0-9-]+$" },
+        "tagline": { "type": "string", "description": "Short catchy tagline", "maxLength": 160 },
+        "description": { "type": "string", "description": "Detailed description of gameplay and story", "maxLength": 5000 },
+        "category": { "type": "string", "description": "Game category or genre", "enum": ["Action", "RPG", "Racing", "Arcade", "Strategy", "Casual", "Sci-Fi", "Multiplayer"] },
+        "developer": { "type": "string", "description": "Developer studio name", "maxLength": 60 },
+        "version": { "type": "string", "description": "Semantic APK version number, e.g. 1.2.0", "maxLength": 20 },
+        "minAndroid": { "type": "string", "description": "Minimum Android OS requirement", "maxLength": 50 },
+        "packageName": { "type": "string", "description": "Android package identifier", "maxLength": 100 },
+        "architecture": { "type": "string", "description": "CPU architecture support", "maxLength": 50 },
+        "fileSize": { "type": "string", "description": "Formatted file size string (e.g. 48.5 MB)", "maxLength": 30 },
+        "fileSizeBytes": { "type": "number", "description": "Exact file size in bytes" },
+        "apkUrl": { "type": "string", "description": "Public URL or path to download the verified APK file" },
+        "apkFileName": { "type": "string", "description": "Original APK file name" },
+        "sha256": { "type": "string", "description": "SHA-256 integrity checksum of the APK" },
+        "coverImage": { "type": "string", "description": "URL of the game cover banner image" },
+        "screenshots": { "type": "array", "description": "URLs of in-game screenshots" },
+        "features": { "type": "array", "description": "Bullet points highlighting top features" },
+        "downloadCount": { "type": "number", "description": "Total verified downloads counter" },
+        "rating": { "type": "number", "description": "Average rating out of 5.0" },
+        "published": { "type": "boolean", "description": "Whether the game is publicly visible and downloadable" },
+        "isFeatured": { "type": "boolean", "description": "Whether the game is spotlighted in the hero showcase" },
+        "changelog": { "type": "string", "description": "What is new in this APK release", "maxLength": 2000 },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp" }
+      },
+      "required": ["id", "title", "slug", "category", "developer", "version", "apkUrl", "published"]
+    },
+    "DownloadStat": {
+      "title": "DownloadStat",
+      "description": "Atomic tracking event when a visitor downloads an APK",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Event ID" },
+        "gameId": { "type": "string", "description": "Reference to the game document ID" },
+        "version": { "type": "string", "description": "APK version downloaded" },
+        "timestamp": { "type": "string", "format": "date-time", "description": "Download timestamp" },
+        "deviceType": { "type": "string", "description": "Visitor device type detected from user agent" }
+      },
+      "required": ["id", "gameId", "version", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/games/{gameId}": {
+      "schema": "Game",
+      "description": "Collection of all published and draft Android APK games"
+    },
+    "/downloads/{downloadId}": {
+      "schema": "DownloadStat",
+      "description": "Collection of APK download analytics events"
+    }
+  }
+}

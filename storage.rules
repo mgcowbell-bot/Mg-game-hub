@@ -1,0 +1,18 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Public APK downloads and cover assets: readable by anyone
+    match /apks/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.email == "mgcowbell@gmail.com";
+    }
+    match /covers/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.email == "mgcowbell@gmail.com";
+    }
+    match /screenshots/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.email == "mgcowbell@gmail.com";
+    }
+  }
+}
